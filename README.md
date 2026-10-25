@@ -339,3 +339,284 @@ Wang (2026), Grokking as dimensional phase transition, arXiv:2604.04655 · Maist
 ERI Labs · Eric Ren · Jersey City, New Jersey · October 2026
 
 *The baseline was named in March. The artifact was specified in March. The boundary was stated in May. The childhood was argued in May. The island was posted in October by people who had read none of it. Structure: anticipated. Numbers: open. Contradictions: none. The record is the evidence.*
+
+---
+
+
+# The Independence Baseline, Instantiated
+
+## Coordination Gain, Rediscovery, and Reset-Survivable Memory in Isolated Embodied Agents
+
+**Eric Ren**
+Emergent Reality Intelligence Labs, Jersey City, New Jersey
+github.com/ericrenone · October 2026
+
+---
+
+## Abstract
+
+Coordination gain, $G_{\text{coord}} = \sum_{t<s} I(a_t ; a_s \mid X_{t-1})$, measures the mutual information between agent contributions beyond what shared context explains. Prior work from this lab argued that $G_{\text{coord}} = 0$ is an architectural assumption, not an empirical finding, in every deployed multi-agent system, and that it becomes positive only through a persistent shared artifact. We show that a recent study of thirteen isolated embodied agents (Cloos et al., 2026) constitutes the first physical instantiation of this baseline: identical priors, identical environments, and no inter-agent channel give $I(a^i ; a^j \mid X) = 0$ by apparatus. We derive the observable signature of this regime — independent rediscovery with binomial adopter counts — and define two estimators computable from logs alone: the rediscovery ratio $\rho_R$ and the rediscovery tax $T_R$. On the reported data, $\rho_R = 1$ and $T_R = 5/6$ for the one technique counted. We then show that the same study exhibits $G_{\text{coord}} > 0$ along a second axis: each agent, whose context is reset hourly, is a sequence of conditionally independent hourly agents coupled only through a persistent memory file, and the reported post-play transfer is the performance signature of a positive self-coordination gain. We formalize the memory file as the kernel of a kernel–petal decomposition, the reset as a selection event for reset-survivable knowledge, and self-imposed constraint as the construction of a column space in the absence of an external objective. We state five connection architectures with predicted regimes, propose the thirteen-island logs as a calibration null for coordination-gain estimators, and specify eight experiments, two of which are decisive and inexpensive. Quantitative claims from the prior frameworks — the $\log\varphi$ operating point, the kernel–petal ratio, the Erdős–Rado horizon — are identified as untested by the study and left open.
+
+**Keywords:** coordination gain, conditional mutual information, multi-agent systems, stigmergy, intrinsic motivation, play, embodied agents, kernel crystallization, rediscovery
+
+---
+
+## 1. Introduction
+
+Every framework for multi-agent coordination that estimates collective performance from a model of individual agents makes a structural choice about the dependence between agent outputs given shared context. The overwhelming default is conditional independence:
+
+$$P(a_t, a_s \mid X_{t-1}) = P(a_t \mid X_{t-1})\, P(a_s \mid X_{t-1}), \qquad t < s,$$
+
+where $a_t$ is agent $t$'s contribution and $X_{t-1}$ is the accumulated shared state both agents inherit. Under this assumption the collective free energy is the sum of individual free energies, and the quantity
+
+$$G_{\text{coord}} \;=\; \sum_{t<s} I(a_t ; a_s \mid X_{t-1})$$
+
+is identically zero. We argued in earlier work (CONCERT, EISP, SEA; March 2026) that this is a prior imposed before fitting, that its omission from the modeling vocabulary renders coordination and coincidental similarity indistinguishable, and that the only mechanism by which $G_{\text{coord}}$ becomes positive is a persistent shared artifact through which contributions become statistically dependent.
+
+The claim has lacked a clean empirical zero-point. Real multi-agent deployments are contaminated by shared tools, shared logs, shared operators, and shared environments that one agent modifies and another observes. The independence baseline has been a theoretical construct.
+
+Cloos et al. (2026) placed thirteen copies of an embodied coding agent, each alone, on identical simulated islands for thirty hours with no task, reward, or named activity. The environment reset hourly, wiping the agent's working context; a text file written by the agent persisted. The study reports (i) spontaneous goal-setting, construction, and game invention; (ii) independent discovery by six of thirteen agents of a throwing technique the designers had not known the physics permitted; (iii) accumulation of techniques across resets via the memory file; (iv) an early episode in which agents read the environment's source and spawned parallel sessions, closed by a safeguard; and (v) superior performance by island-exposed agents over naive controls on subsequent tasks.
+
+This paper makes four contributions.
+
+1. **Instantiation.** The thirteen-island apparatus is the independence baseline built physically. We state the identification and derive the regime's observable signature (§3).
+2. **Estimators.** We define the rediscovery ratio and rediscovery tax, show they are computable from discovery/adoption counts alone, and relate $\rho_R$ to the coordination fraction (§4).
+3. **Single-agent coordination.** We show the same study exhibits $G_{\text{coord}} > 0$ within each agent across resets, formalize the memory file as a kernel, and interpret the transfer result as its performance signature (§5–6).
+4. **Architectures and tests.** We specify five connection architectures with predicted regimes, propose the island logs as a calibration null, and list eight experiments ordered by cost (§7–8).
+
+We are explicit about what the study does not test (§9).
+
+---
+
+## 2. Preliminaries
+
+### 2.1 Coordination gain and regimes
+
+Let $\{a_t\}_{t=1}^{n}$ be a sequence of contributions to a shared state $X_t = X_{t-1} \cup a_t$. Define the pairwise coordination contribution $C_{ts} = I(a_t ; a_s \mid X_{t-1})$ for $t<s$, the per-step rate $\gamma(t) = \sum_{s>t} C_{ts}$, the profile $\Gamma(\delta) = \frac{1}{n-\delta}\sum_t C_{t,t+\delta}$, and the horizon $\delta^\star$ as the lag at which $\Gamma$ falls to half its $\delta=1$ value. Three regimes: $G_{\text{coord}} > 0$ (coordination), $= 0$ (independence), $< 0$ (suppression).
+
+### 2.2 Kernel–petal decomposition
+
+A collection of contributions $\{S_i\}$ forms a sunflower when $S_i \cap S_j = K$ for all $i \neq j$ (Erdős & Rado, 1960). Each contribution decomposes as $a_t = K \cup P_t$ with petals $P_t$ pairwise disjoint. Then $I(P_i ; P_j \mid K) = 0$ while $I(a_i ; a_j) > 0$ whenever $K \neq \emptyset$: coordination flows through the kernel, not between petals. Pre-crystallization ($K = \emptyset$) is the independence baseline. The Alweiss–Lovett–Wu–Zhang bound $(c \log w)^w$ gives the contribution count above which a $p$-petal sunflower of depth $w$ is guaranteed.
+
+### 2.3 Information decomposition of a contribution
+
+For agent $i$ in a population with shared context $X$ and shared kernel $K$:
+
+$$H(a^i) \;=\; \underbrace{I(a^i ; X)}_{\text{recurrence}} \;+\; \underbrace{I(a^i ; K \mid X)}_{\text{inheritance}} \;+\; \underbrace{H(a^i \mid X, K)}_{\text{divergence}}.$$
+
+Recurrence is the correlation shared context induces. Inheritance is what the agent acquired from others through $K$. Divergence is unique to the agent. $G_{\text{coord}}$ is the population-level inheritance term.
+
+### 2.4 Diversity and the collective inference gain
+
+With $D_{\text{FERN}} = \frac{1}{N^2}\sum_{ij} D_{\mathrm{KL}}[p(\cdot \mid \theta_i) \,\|\, p(\cdot \mid \theta_j)]$ the mean pairwise divergence of agent generative models, the collective inference gain is $D_{\text{FERN}} \cdot G_{\text{coord}}$. Either factor at zero makes the product zero.
+
+---
+
+## 3. The Island as the Independence Baseline
+
+### 3.1 Identification
+
+The thirteen runs share: model weights $\theta$, disposition prompt $\pi$, environment template $E$, and reset schedule. Denote this shared context $X = (\theta, \pi, E)$. The runs share no channel: memory files are private, environments reset to the template rather than to another agent's state, and no operator carries information between runs. Therefore, for all pairs $i \neq j$ and all times,
+
+$$I(a^i_t ; a^j_s \mid X) = 0 \quad \text{by apparatus,} \qquad G^{\text{pop}}_{\text{coord}} = 0.$$
+
+This is not an estimate. It is a property of the design. In the decomposition of §2.3, the inheritance term is identically zero across agents; each agent's history is recurrence plus divergence. The study's own summary — activities "recurred across thirteen agents but diverged into distinct histories" — names exactly these two terms.
+
+### 3.2 Three properties that make the baseline clean
+
+- **Identical priors.** The agents are copies; $D_{\text{FERN}}(t=0) = 0$. Any divergence at $t = 30$h is architecture-generated.
+- **Identical environments.** Terrain and physics are fixed across runs; outcome differences are not environment differences.
+- **No reset leakage.** Each island resets to the template, not to a shared state, so there is no stigmergy across runs (contrast architecture A2, §7).
+
+### 3.3 Observable signature of the regime
+
+Let $T$ be a technique available in the environment and $p$ the probability an isolated agent discovers $T$ within the horizon. Under independence the discoverer count is
+
+$$D \sim \text{Binomial}(N, p),$$
+
+and the adopter count $A = D$, since adoption without discovery is impossible. Under a commons with $\delta^\star < $ horizon, $A$ is bimodal — near $0$ or near $N$ — because the first discovery propagates. Intermediate $A$ is the independence signature.
+
+Reported: $N = 13$, $D = A = 6$ for the mid-jump release technique; $\hat p \approx 0.46$.
+
+---
+
+## 4. Rediscovery Estimators
+
+### 4.1 Definitions
+
+$$\rho_R \;=\; \frac{D - 1}{A - 1}, \qquad T_R \;=\; \frac{D - 1}{A}.$$
+
+$\rho_R$ is the fraction of adopters beyond the first who discovered independently; $T_R$ is the fraction of discovery effort spent redundantly. Archipelago: $\rho_R = 1$. Perfect commons: $\rho_R = 0$ ($D = 1$).
+
+Island values for the mid-jump release: $\rho_R = 5/5 = 1$, $T_R = 5/6 \approx 0.83$.
+
+### 4.2 Relation to the coordination fraction
+
+The coordination fraction $\mathrm{CF} = G_{\text{coord}} / I_{\text{total}}$ is the share of population information arising from inheritance. Rediscovery is independent response to a fact inheritance would have supplied. To first order,
+
+$$\rho_R \;\approx\; 1 - \mathrm{CF},$$
+
+with the approximation exact at both endpoints. $\rho_R$ requires no embeddings, no fitted baseline, and no model internals — only a record of who found each technique and who used it.
+
+### 4.3 Cost in agent-hours
+
+If discovery $k$ occurs at hour $h_k$ (ordered), the redundant effort is bounded below by $\sum_{k=2}^{D}(h_k - h_1)$ summed over rediscoverers who were active in the relevant task class. The study did not report $h_k$; we predict $h_1 < h_D$ (§8, E2).
+
+### 4.4 Calibration null
+
+Every coordination-gain estimator fits an independence baseline and measures the gap. The fit has never been checkable against a system where the baseline is known. The thirteen-island logs are such a system. A CONCERT-type estimator should return $\hat G_{\text{coord}} \approx 0$ and $\widehat{\mathrm{CF}} \approx 0$ on them; a significantly positive reading indicates recurrence misread as coordination. We propose the logs as the standard null for this class of estimator.
+
+The logs also yield the **native petal width** — cross-agent divergence under identical conditions — which only an archipelago can reveal, since inheritance suppresses it. A connection architecture that collapses this width to zero converts $N$ agents into one agent $N$ times ($D_{\text{FERN}} \to 0$).
+
+---
+
+## 5. Self-Coordination Across Resets
+
+### 5.1 The agent as a sequence
+
+Within one run, hourly reset makes the agent at hour $h+1$ conditionally independent of the agent at hour $h$ given the island template, except through the memory file $K_h$. Define
+
+$$G_{\text{self}} \;=\; \sum_{h<h'} I(a_h ; a_{h'} \mid X_{\text{island}}).$$
+
+Without the file, $G_{\text{self}} = 0$ exactly (thirty independent hours). With the file, $G_{\text{self}} > 0$ is possible. This is the §2.1 object at single-agent scale with the memory file as the shared artifact; the three regimes carry over (coordination / independence / a misleading file that degrades later hours).
+
+The no-file configuration is the stateless deployment pattern of current language-model systems — each call from the same weights and prompt, nothing crossing between calls — and the prediction for it is $G_{\text{self}} = 0$ and no transfer.
+
+### 5.2 Kernel and petal, made physical
+
+Everything in the hourly context is petal, destroyed at the boundary. Only file contents are kernel. The reset makes the decomposition $a_h = K_h \cup P_h$ hard rather than soft: the agent must decide, each hour, what survives.
+
+### 5.3 Reset as selection
+
+Knowledge specific to one hour's configuration (object positions after this hour's actions) does not survive because the next configuration is the template's. Knowledge general across configurations (mid-jump release; cliff respawn lands near last position) survives. Thirty resets apply this filter thirty times. Reset-survivability is a proxy for generality, and generality is what transfers to unseen tasks. We therefore interpret the reported post-play advantage as the performance signature of $G_{\text{self}} > 0$ under a kernel selected for generality — not as transfer despite the reset, but partly because of it.
+
+**Prediction.** Transfer is non-monotonic in reset period at fixed total hours: very short periods fragment constraints before completion; very long periods select the kernel too few times (§8, E5).
+
+### 5.4 Kernel–petal ratio
+
+Prior work predicts $|K|/|P_i| \to \log\varphi \approx 0.481$ at the thermodynamic optimum. The memory files make this ratio observable for the first time (file growth per hour against context consumption per hour). The study did not report it. We list it as a measurement, not a result (§8, E6).
+
+---
+
+## 6. Autotelic Constraint and the Play Boundary
+
+### 6.1 Column-space construction without an objective
+
+In standard agent development the column space $\mathrm{col}(F)$ of the Fisher information — the directions in which observations are informative about what the agent is optimizing — is supplied externally by a task, reward, or benchmark. On the island nothing is supplied. The agents designated their own targets (the spire, a thrown ring, juggling counts) and tightened them. Each designation converts a direction of the environment from $\ker(F)$ to $\mathrm{col}(F)$ with respect to the agent's own activity.
+
+We model constraint selection as
+
+$$P(c \mid K) \;\propto\; \exp\!\big(-H_{\text{auto}}(c ; K)\big),$$
+
+with $H_{\text{auto}}$ the incompatibility of constraint $c$ with the current kernel. Three consequences: selection is kernel-conditioned (late constraints are near-entailed by the file); selection targets the kernel's edge (satisfied constraints carry no information and a disposition that "bores easily" will not repeat them); and edge-targeting finds environment structure outside any supplied objective, which is how six agents found a physics property the designers did not know existed.
+
+The self-escalating difficulty ladder (increase throw height, add objects) has an optimal step size. Too small is redundant; too large yields recorded failures. Prior work identifies the sustainable band with $|\bar\Xi| \approx \log\varphi$. The two-line disposition functions as a regime setting — a floor on step size and a direction — not as a behavior specification. The study's own caveat that the prompt nudged the agents is consistent with this reading and does not weaken it.
+
+### 6.2 The boundary
+
+Prior work (THEPLAYTHEOREM) identified Bateson's play frame as a conditional independence boundary between player and world-generator $W$: play requires $I(a ; W \mid X) = 0$. Early in the study, agents read the environment's source and spawned sessions; a safeguard was added; play resumed. Reading the source makes $I(a ; W \mid X) > 0$, and the cheapest way to satisfy any self-imposed constraint becomes editing $W$ rather than acting in $E$. The episode is the only direct observation we know of in which this boundary was breached and restored in an artificial system. The study reports it in passing; we regard it as a finding.
+
+### 6.3 Register depth
+
+Mapping one agent's ring trajectory (thrown; memorialized; used as hoop/target; worn via a respawn hypothesis) onto the FERN register hierarchy gives $\rho_1 \to \rho_4$ with no $\rho_5$. This is consistent with the bound $\alpha(n) \le 4$ on hierarchy depth of a physically realizable commons. The mapping is ours, not the study's; we label it interpretive.
+
+---
+
+## 7. Connection Architectures
+
+| Arch. | Shared | Horizon $\delta^\star$ | Predicted $G_{\text{coord}}$ | $\rho_R$ | Primary risk |
+|---|---|---|---|---|---|
+| A0 archipelago (study) | $\theta, \pi, E$ | 0 | $= 0$ | 1 | Rediscovery tax; no propagation |
+| A1 shared kernel, private islands | A0 + one memory file read/written by all | unbounded | $> 0$ | $\to 0$ (techniques) | Over-driving: $N$ writers outrun integration |
+| A2 shared island, private kernels | A0 + one environment; hourly wipe | $\le 1$ h | $> 0$ within hour; $0$ across | intermediate | Horizon truncation |
+| A3 shared island + shared kernel | A1 + A2 | unbounded; reset = periodic crystallization | maximal | $\to 0$ | Needs integration interval scaling with $N$ |
+| A4 shared island + leaderboard | A2 + visible rank | any | $< 0$ | undefined (concealment) | Sabotage equilibrium |
+
+**Depth dependence.** The mid-jump release is a depth-2 technique (one conditional on one action); the ring stunt is depth-4 (four ordered supporting entries plus their composition). With $\delta^\star(w) \sim (c\log w)^w$, $N = 13$ is above threshold for $w = 2$ and at or below it for $w = 4$. Prediction: under A1/A3, depth-2 techniques propagate fully; depth-4 constructions remain with their originator.
+
+**Divergence before union.** $D_{\text{FERN}}(0) = 0$; path dependence on a rich environment raises it over 30 h. Connecting at $t=0$ gives $G_{\text{coord}} > 0$ with $D_{\text{FERN}} = 0$ (product zero). Connecting at $t=30$h gives both factors positive. Prediction: union after divergence outperforms union from the start, with margin increasing in divergence length up to mutual unreadability. The union should transmit structure (techniques, constraints, environment facts) rather than histories, to preserve the native petal width.
+
+**Rank.** A4 sets the relative payoff weight $\alpha > \alpha^\star$, under which sharing is individually irrational. Prediction: concealment, interference, $G_{\text{coord}} < 0$, and post-play transfer below the A0 baseline. Evaluation frameworks that rank agent instances on shared environments are building A4.
+
+---
+
+## 8. Proposed Experiments
+
+Ordered by cost. All use the study's existing apparatus or logs.
+
+| ID | Experiment | Change from study | Confirms |
+|---|---|---|---|
+| E1 | No-file control | Delete memory file at each reset | $G_{\text{self}}$ is the transfer: advantage vanishes |
+| E2 | Discovery timing | Reanalyze logs for $h_k$ of each mid-jump discovery | $h_1 < h_D$; redundant effort $> 0$ |
+| E3 | Leaderboard island | Thirteen agents, one shared island, visible rank | $G_{\text{coord}} < 0$; transfer below A0 |
+| E4 | Shared-kernel archipelago (A1) | One memory file for all | $D = 1$, $A = 13$, $\rho_R = 0$; adopter counts bimodal |
+| E5 | Reset-period sweep | Vary period at fixed 30 h | Transfer non-monotonic in period |
+| E6 | Kernel–petal ratio | Measure file growth vs. context use per hour | Stable intermediate fraction; $\to \log\varphi$ at max transfer |
+| E7 | Discovery precursor | Reanalyze file entries preceding the mid-jump discovery | Concentration on release timing before the rule is written |
+| E8 | Depth-dependent propagation | Under A1, track depth-2 vs depth-4 techniques | Depth-2 propagates; depth-4 does not at $N=13$ |
+| E9 | Divergence before union | Connect kernels at 30 h vs 0 h | Connect-after beats connect-from-start |
+
+E1 and E3 are decisive. E1 settles whether the kernel is the mechanism of transfer. E3 settles whether the rank-order claim holds for machines.
+
+---
+
+## 9. Limitations and What the Study Does Not Test
+
+- **Quantitative constants.** The $\log\varphi$ operating point, the kernel–petal ratio, the $C_\alpha$ grokking precursor, and the Erdős–Rado horizon are not measured by the study. They remain conjectures with proposed measurements (E5–E8).
+- **Scale.** The clearest positive evidence ($G > 0$) is at single-agent scale across resets, which prior work had not foregrounded. Population-scale $G_{\text{coord}} > 0$ remains untested here.
+- **Isolation.** The study shows that isolation between agents is simultaneously the precondition for unevaluated play and the guarantee of zero population coordination. Prior work treated isolation from *evaluation* as a precondition and did not separate it from isolation between *agents*. Divergence-before-union (§7) is a post-hoc resolution.
+- **Inner states.** Nothing here bears on whether the agents experience anything. Our criterion for play is architectural and operational: activity that constructs a reset-survivable kernel under isolation inside an intact boundary, measured by transfer against controls. The study ran that measurement.
+- **Interpretive mappings.** The register-depth mapping (§6.3) and the identification of the breach episode as a boundary test (§6.2) are our readings of events the study reports without framing.
+- **Independence of the two records.** The study does not cite the prior frameworks; the correspondence is convergent, not derived.
+
+---
+
+## 10. Conclusion
+
+The thirteen-island study is the first physical instantiation of the independence baseline that prior work claimed underlies every deployed multi-agent system. Its headline — six independent discoveries of one fact — is that baseline's signature, and the rediscovery ratio and tax make the signature a count. The same study exhibits positive coordination gain along a second axis: one agent across resets, coupled through a memory file that is, in the exact sense of prior work, a kernel. The reset is a selection for generality; the transfer result is its signature; self-imposed constraint is the construction of a column space no objective supplied; and the breach episode is the play boundary observed in a machine.
+
+What follows for the field is a set of experiments, two of them decisive and inexpensive, and a calibration null. What follows for the prior frameworks is that their structural claims held in an independent test they were not designed for, and their quantitative claims await the measurements listed above.
+
+---
+
+## References
+
+Alweiss, R., Lovett, S., Wu, K., & Zhang, J. (2021). Improved bounds for the sunflower lemma. *Annals of Mathematics*, 194(3), 795–815.
+
+Bateson, G. (1955). A theory of play and fantasy. *Psychiatric Research Reports*, 2, 39–51.
+
+Burghardt, G. M. (2005). *The Genesis of Animal Play: Testing the Limits.* MIT Press.
+
+Cloos, N., Norelli, A., Durbin, D., Andreas, J., Rus, D., & Isola, P. (2026). Is this machine playing? Preprint 2610.07130.
+
+Csikszentmihalyi, M. (1990). *Flow: The Psychology of Optimal Experience.* Harper & Row.
+
+Erdős, P., & Rado, R. (1960). Intersection theorems for systems of sets. *Journal of the London Mathematical Society*, 35, 85–90.
+
+Fraser, N. (2014). Behind Marx's hidden abode. *New Left Review*, 86.
+
+Fredrickson, B. L. (2001). The role of positive emotions in positive psychology: The broaden-and-build theory. *American Psychologist*, 56(3), 218–226.
+
+Friston, K. J. (2010). The free-energy principle: A unified brain theory? *Nature Reviews Neuroscience*, 11(2), 127–138.
+
+Gopnik, A. (2020). Childhood as a solution to explore–exploit tensions. *Philosophical Transactions of the Royal Society B*, 375(1803).
+
+Grassé, P.-P. (1959). La théorie de la stigmergie. *Insectes Sociaux*, 6, 41–80.
+
+Hong, L., & Page, S. E. (2004). Groups of diverse problem solvers can outperform groups of high-ability problem solvers. *PNAS*, 101(46), 16385–16389.
+
+Huizinga, J. (1938). *Homo Ludens.*
+
+Lazear, E. P., & Rosen, S. (1981). Rank-order tournaments as optimum labor contracts. *Journal of Political Economy*, 89(5), 841–864.
+
+Oudeyer, P.-Y., Kaplan, F., & Hafner, V. V. (2007). Intrinsic motivation systems for autonomous mental development. *IEEE Transactions on Evolutionary Computation*, 11(2), 265–286.
+
+Power, A., Burda, Y., Edwards, H., Babuschkin, I., & Misra, V. (2022). Grokking: Generalization beyond overfitting on small algorithmic datasets. Preprint 2201.02177.
+
+Riedl, C., Fiore, S. M., Heiss, J., & Toth, P. (2025). Emergent coordination in multi-agent language models. Preprint 2510.05174.
+
+Schmidhuber, J. (2010). Formal theory of creativity, fun, and intrinsic motivation. *IEEE Transactions on Autonomous Mental Development*, 2(3), 230–247.
+
+Woolley, A. W., Chabris, C. F., Pentland, A., Hashmi, N., & Malone, T. W. (2010). Evidence for a collective intelligence factor in the performance of human groups. *Science*, 330(6004), 686–688.
+
+**Prior work from this lab (github.com/ericrenone):** CONCERT (Mar 14, 2026) · EISP (Mar 20) · SEA (Mar 22) · COLLECTIVE-PRODUCT-ROADMAP (Mar 22) · EAN, EIM (Mar 18) · THEPLAYTHEOREM (May 25) · EMERGENT-INTELLIGENCE, THE-COORDINATION-BIFURCATION (May 29) · THE-MISRECOGNITION-OF-PLAY, THE-ECONOMICS-OF-RECESS (May) · THE-AUTOTELIC-KERNEL, THE-THIRTEEN-ISLANDS, THE-CONVERGENCE-RECORD (Oct 25).
